@@ -32,7 +32,7 @@ class FileParser:
         # Return the value in the specified column for the given row
         return row[column_index]
 
-    # Get all donation amounts from the Excel file
+    # Get all donation from the Excel file
     def get_donations(self):
         donations = []
         for row in self.rows:

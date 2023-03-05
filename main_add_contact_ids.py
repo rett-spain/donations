@@ -19,6 +19,10 @@ file_parser.read_excel_file()
 # Get all contact ids from Salesforce based on the emails in the Excel file
 all_contact_ids = my_sf.get_contactids_byemail(file_parser.get_column_values('email'))
 
+# Get all contacts ids from Salesforce based on the names in the Excel file
+#contact_id = my_sf.get_contactid_byname ('Pedro', 'Jorge', 'Dias-Neves Rocha')
+all_contact_ids = my_sf.get_contactids_byname(file_parser.get_column_values('name'))
+
 # Add the contact ids to an output Excel file
 file_parser.add_contact_ids(all_contact_ids)
 file_parser.save_file(output_filename)

@@ -111,3 +111,28 @@ class SalesForceAPI:
                 email_to_contact_id[email_address] = contact_id
 
         return email_to_contact_id
+
+    # Get contact id based on first, middle and last name
+    def get_contactid_byname(self, contact_name):
+        query = "SELECT Id FROM Contact WHERE Name = '{}'".format(contact_name)
+        result = self.sf.query(query)
+
+        # Check if only 1 contact records is returned, otherwise return False
+        if result['totalSize'] == 1:
+            # Extract the first Contact record from the result set
+            return result['records'][0]['Id']
+        elif result['totalSize'] > 1:
+            # Several contacts with the same name
+            return False
+        else:
+            return None
+
+    # Get all contact id from Salesforce based on a list with several first, middle and last name
+    def get_contactids_byname(self, contact_name_list):
+        name_to_contact_id = {}
+        for contact_name in contact_name_list:
+            contact_id = self.get_contactid_byname(contact_name)
+            if contact_id:
+                name_to_contact_id[contact_name] = contact_id
+
+        return name_to_contact_id
