@@ -1,43 +1,44 @@
 from mysecrets import username, password, security_token, email_address_1
-from npsp_connection import npsp_connection
+from salesforce_api import SalesForceAPI
 from donation import Donation
 from contact import Contact
 
 # Obtain the access token from Salesforce
-my_connection = npsp_connection(username, password, security_token)
-my_connection.connect()
-print (my_connection.sf)
+my_sf = SalesForceAPI(username, password, security_token)
+my_sf.authenticate()
+print (my_sf.sf)
 
-# Query for the Contact record based on the Email field
-my_contact = Contact(my_connection.sf)
-my_contact.get_contact_byemail (email_address_1)
-print(my_contact.contact_id)
-print(my_contact.email_address)
-print(my_contact.first_name)
-print(my_contact.last_name)
+# Let's use 3 contact ids as example
+contact_id1 = "0033X00002rGwc3"
+contact_id2 = "0033X00002rGwc6"
+contact_id3 = "0033X00002rGwc7"
 
-# Query for the Donation record based on the Contact ID and Close Date
-my_donation = Donation (my_connection.sf)
-my_donation.get_donation_bycontactid_date (my_contact.contact_id, "2023-03-04")
-my_donation.delete_donation (my_donation.donation_id)
+# Retrieve info from contact based on contact ID
+my_contact = Contact()
+my_contact.contact_id = contact_id1
+my_sf.get_contact_byid(my_contact)
 
-# Create a new Donation record
+# Retrieve info from contact based on email
+my_other_contact = Contact()
+my_other_contact.email_address = email_address_1
+my_sf.get_contact_byemail(my_other_contact)
+
+# Create donation information
 donation_name = "Donation 1 test"
 donation_amount = 1.23
 stage_name = "Closed Won"
 close_date = "2023-03-04"
-type = "Donación"
-aesr_DonationCategory__c = "Bing"
-donation = Donation (my_connection.sf, donation_name, donation_amount, stage_name, close_date, type, aesr_DonationCategory__c)
-donation.create_donation (my_contact.contact_id)
+donation_type = "Donación"
+donation_category = "Bing"
 
-# Update the Donation record
-my_donation_id = '006MI000006ziGpYAI'
-donation.update_donation_amount (my_donation_id, 2.45)
-donation.update_donation_category (my_donation_id, "Eventos")
-donation.update_donation_name (my_donation_id, "Donation 2 test")
-donation.update_donation_type (my_donation_id, "Subvención")
-print (my_donation_id)
+# Create a list of donations
+donations = []
+my_donation1 = Donation(donation_name, donation_amount, stage_name, close_date, donation_type, donation_category, contact_id1)
+donations.append(my_donation1)
+my_donation2 = Donation(donation_name, donation_amount, stage_name, close_date, donation_type, donation_category, contact_id2)
+donations.append(my_donation2)
+my_donation3 = Donation(donation_name, donation_amount, stage_name, close_date, donation_type, donation_category, contact_id3)
+donations.append(my_donation3)
 
-# Delete the Donation record
-donation.delete_donation (my_donation_id)
+# Upload the donations to Salesforce
+my_sf.upload_donations(donations)
