@@ -2,6 +2,13 @@ from mysecrets import username, password, security_token, email_address_1
 from salesforce_api import SalesForceAPI
 from donation import Donation
 from contact import Contact
+from file_parser import FileParser
+
+
+# Create a new parser object
+my_parser = FileParser("example.xlsx")
+my_parser.parse_file()
+values = my_parser.get_column_values("email")
 
 # Obtain the access token from Salesforce
 my_sf = SalesForceAPI(username, password, security_token)

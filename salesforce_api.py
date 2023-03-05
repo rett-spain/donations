@@ -87,3 +87,18 @@ class SalesForceAPI:
             return True
         else:
             return False
+
+    # Check if there is a unique contact ID from Salesforce based on the contact email address
+    def get_contactid_byemail(self, email_address):
+        query = "SELECT Id FROM Contact WHERE Email = '{}'".format(email_address)
+        result = self.sf.query(query)
+
+        # Check if only 1 contact records is returned, otherwise return False
+        if result['totalSize'] == 1:
+            # Extract the first Contact record from the result set
+            return result['records'][0]['Id']
+        elif result['totalSize'] > 1:
+            # Several contacts with the same email address
+            return False
+        else:
+            return None
