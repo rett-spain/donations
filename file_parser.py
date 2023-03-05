@@ -5,8 +5,74 @@ from mysecrets import username, password, security_token
 class FileParser:
     def __init__(self, file_path):
         self.file_path = file_path
-        self.headers = None
-        self.data = []
+        self.rows = []
+        self.headers = []
+
+    # Read the Excel file
+    def read_excel_file(self):
+        # Use Pandas to read the Excel file
+        df = pd.read_excel(self.file_path)
+
+        # Store the data and headers in self.rows and self.headers, respectively
+        self.rows = df.values.tolist()
+        self.headers = df.columns.tolist()
+
+    # Get the values of a column given the name of the header
+    def get_column_values(self, header):
+        # Get all values for a given header
+        header_index = self.headers.index(header)
+        values = [row[header_index] for row in self.rows]
+        return values
+
+    # Get the value of a specific column in a row given the name of the column
+    def get_row_value(self, row, column_name):
+        # Get the index of the column
+        column_index = self.headers.index(column_name)
+
+        # Return the value in the specified column for the given row
+        return row[column_index]
+
+    # Get all donation amounts from the Excel file
+    def get_donations(self):
+        donations = []
+        for row in self.rows:
+            donation = {}
+            for i, header in enumerate(self.headers):
+                donation[header] = row[i]
+            donations.append(donation)
+        return donations
+
+    # Add contact IDs to the file
+    def add_contact_ids(self, sf_contacts):
+        # Add the "Contact Id" header to the file
+        self.headers.append("contact_id")
+
+        # Loop through all the rows and add the contact ID
+        for row in self.rows:
+            email = row[self.headers.index("email")]
+            for contact in sf_contacts:
+                if contact == email:
+                    row.append(sf_contacts[contact])
+                    break
+            else:
+                row.append(None)
+
+        # Update the data property with the new rows
+        self.data = pd.DataFrame(self.rows, columns=self.headers)
+
+    # Write to file
+    def save_file(self, output_file_path):
+        # Save the modified data to a new Excel file
+        self.data.to_excel(output_file_path, index=False)
+
+
+'''
+    def __init__(self, file_path, header_row=0):
+        self.data = pd.read_excel(file_path, header=header_row, engine='openpyxl')
+        self.header = list(self.data.columns)
+#        self.file_path = file_path
+#        self.headers = None
+#        self.data = []
 
     def read_excel_file(self):
         # Read the Excel file into a pandas DataFrame
@@ -34,15 +100,22 @@ class FileParser:
         self.data = data
         return headers, data
 
-    def parse_file(self):
-        # Determine file type and call appropriate read function
-        file_type = self.file_path.split(".")[-1]
-        if file_type == "xlsx":
-            self.headers, self.data = self.read_excel_file()
-        elif file_type == "csv":
-            self.read_csv_file()
-        else:
-            raise ValueError("Unsupported file type: {}".format(file_type))
+    def parse_file(self, file_path):
+        # Read the data from the file
+        self.read_excel_file(file_path)
+
+        # Get the index of the relevant columns
+        email_index = self.get_column_index("Email")
+        amount_index = self.get_column_index("Amount")
+        contact_id_index = self.get_column_index("Contact Id")
+
+        # Get the donations data and upload to Salesforce
+        for row in self.data[1:]:
+            email = row[email_index]
+            amount = row[amount_index]
+            contact_id = row[contact_id_index]
+            donation = Donation(amount, Contact(email, contact_id))
+            self.upload_donations([donation])
 
     def get_column_values(self, header):
         # Find the index of the header
@@ -53,7 +126,22 @@ class FileParser:
             values.append(row[header_index])
         return values
 
+    def get_row_values_from_column_name (self, column_name, column_value):
+        # Find the index of the column with the given column name
+        print (column_name)
+        print (column_value)
+        print (self.data[0].index)
+        column_index = self.data[0].index(column_name)
 
+        # Loop through all the rows and find the row that matches the given column value
+        for row in self.data:
+            if row[column_index] == column_value:
+                return row
+
+        # If no matching row is found, return None
+        return None
+'''
+        
 
 '''
 # Open the Excel file

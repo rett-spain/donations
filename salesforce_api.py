@@ -21,20 +21,19 @@ class SalesForceAPI:
     def upload_donations(self, donations):
         for donation in donations:
             # check if contact exists in Salesforce
-            if self.contact_exists(donation.contact_id):
+            if self.contact_exists(donation["contact_id"]):
                 # upload Donation to Salesforce
                 self.upload_donation(donation)
-                print (f"Uploaded donation of {donation.donation_amount} for contact with ID {donation.contact_id}")
+                print (f'Uploaded donation of {donation["donation_amount"]} for contact with ID {donation["contact_id"]}')
             else:
-                print(f"Contact with ID {donation.contact_id} does not exist in Salesforce")
-
+                print(f'Contact with ID {donation["contact_id"]} does not exist in Salesforce')
 
     # Upload a single donation to Salesforce
     def upload_donation(self, donation):
         try:
-            opportunity = self.sf.Opportunity.create({'npsp__Primary_Contact__c': donation.contact_id, 'Name': donation.donation_name, 'Amount': donation.donation_amount, 'StageName': donation.stage_name, 'CloseDate': donation.close_date, 'Type':donation.donation_type, 'aesr_DonationCategory__c': donation.donation_category})
-            donation.donation_id = opportunity['id']
-            self.sf.OpportunityContactRole.create({'OpportunityId': donation.donation_id, 'ContactId': donation.contact_id})
+            opportunity = self.sf.Opportunity.create({'npsp__Primary_Contact__c': donation["contact_id"], 'Name': donation["donation_name"], 'Amount': donation["donation_amount"], 'StageName': donation["stage_name"], 'CloseDate': donation["close_date"].strftime('%Y-%m-%d'), 'Type':donation["donation_type"], 'aesr_DonationCategory__c': donation["donation_category"]})
+            donation["donation_id"] = opportunity['id']
+            self.sf.OpportunityContactRole.create({'OpportunityId': donation["donation_id"], 'ContactId': donation["contact_id"]})
         except SalesforceMalformedRequest as e:
             print(e)
 
@@ -102,3 +101,13 @@ class SalesForceAPI:
             return False
         else:
             return None
+
+    # Get all contact id from Salesforce based on a list with several email address
+    def get_contactids_byemail(self, email_address_list):
+        email_to_contact_id = {}
+        for email_address in email_address_list:
+            contact_id = self.get_contactid_byemail(email_address)
+            if contact_id:
+                email_to_contact_id[email_address] = contact_id
+
+        return email_to_contact_id
