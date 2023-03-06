@@ -136,3 +136,20 @@ class SalesForceAPI:
                 name_to_contact_id[contact_name] = contact_id
 
         return name_to_contact_id
+
+    # Get contact id based on generic information using SOSL query
+    def get_contactid_bygeneric(self, generic_info):
+        # Examples of SOSL queries
+        query = "FIND {Pedro} IN Name Fields RETURNING Contact(Id, FirstName, LastName, Phone, Email)"
+        search_terms = ['Pedro']
+        query = 'FIND {{{0}}} IN Name Fields RETURNING Contact(Id, FirstName, LastName, Phone, Email)'.format('}, {'.join(search_terms))
+        query = "FIND {Pedro Jorge} IN Name Fields RETURNING Contact(Id, FirstName, LastName, Phone, Email)"
+        query = "FIND {Fernan*} IN Name Fields RETURNING Contact(Id, FirstName, LastName, Phone, Email)"
+
+        # This also works
+        query = 'FIND {{{0}}} IN Name Fields RETURNING Contact(Id, FirstName, LastName, Phone, Email)'.format('}, {'.join(generic_info.split(' ')))
+
+        result = self.sf.search(query)
+
+        # Return all contact ids
+        return result
