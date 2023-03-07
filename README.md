@@ -1,6 +1,6 @@
-# donations
+# Donations tools for Salesforce NPSP (Nonprofit Success Package)
 
-This code provides the following use cases:
+This Python code provides some bacic tools for the following use cases:
 
 1. Command line app that receives as an input text and searches the Salesforce CRM for matches. It also calculates a basic relevance score and provides the top 5 results based on this score. This app uses Salesforce SOSL queries to execute the search.
 
