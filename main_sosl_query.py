@@ -1,7 +1,7 @@
 from mysecrets import username, password, security_token
 from salesforce_api import SalesForceAPI
 
-
+# Function to print the results
 def print_results(results):
     for result in results['searchRecords']:
         print(f"Name: {result['Name']}")
@@ -19,8 +19,8 @@ my_sf = SalesForceAPI(username, password, security_token)
 my_sf.authenticate()
 
 # Get the contact information by generic search
-generic_info = input("Enter the generic info:")
-result = my_sf.get_contactid_bygeneric (generic_info)
+search_terms = input("Enter the generic info:")
+results = my_sf.get_contactid_bygeneric (search_terms)
 
 # Print the results
-print_results (result)
+print_results (results)

@@ -146,11 +146,13 @@ class SalesForceAPI:
         query = "FIND {Pedro Jorge} IN Name Fields RETURNING Contact(Id, FirstName, LastName, Phone, Email)"
         query = "FIND {Fernan*} IN Name Fields RETURNING Contact(Id, FirstName, LastName, Phone, Email)"
         query = 'FIND {{{0}}} IN Name Fields RETURNING Contact(Id, FirstName, LastName, Phone, Email)'.format('}, {'.join(generic_info.split(' ')))
-
-        # Search in all fields and return main contact information
         query = 'FIND {{{0}}} IN ALL Fields RETURNING Contact(Id, Name, Phone, Email, ContactType__c, SituacionTesoreria__c, aesrFechaAlta__c, aesrFechaBaja__c)'.format('}, {'.join(generic_info.split(' ')))
 
+        # Search in all fields and return main contact information
+        query = f'FIND {{{generic_info}}} IN ALL Fields RETURNING Contact(Id, Name, Phone, Email, ContactType__c, SituacionTesoreria__c, aesrFechaAlta__c, aesrFechaBaja__c)'
+
+        # Execute the search
         result = self.sf.search(query)
 
-        # Return all contact ids
+        # Return the result of the search
         return result
