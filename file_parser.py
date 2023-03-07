@@ -1,5 +1,4 @@
 import pandas as pd
-from salesforce_api import SalesForceAPI
 
 class FileParser:
     def __init__(self, file_path):
