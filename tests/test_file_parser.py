@@ -1,5 +1,6 @@
 import sys
 import os
+import unittest
 
 # Add the root directory of your project to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -25,8 +26,6 @@ def test_get_column_values():
     file_parser.read_excel_file()
     column_values = file_parser.get_column_values("Column1")
     assert len(column_values) == len(file_parser.rows)
-
-import unittest
 
 class TestFileParser(unittest.TestCase):
     def setUp(self):
