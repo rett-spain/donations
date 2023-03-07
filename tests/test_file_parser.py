@@ -30,7 +30,7 @@ import unittest
 
 class TestFileParser(unittest.TestCase):
     def setUp(self):
-        self.file_path = 'tests/test_data.xlsx'
+        self.file_path = 'tests/test_file.xlsx'
         self.file_parser = FileParser(self.file_path)
         self.file_parser.read_excel_file()
 
