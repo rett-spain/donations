@@ -19,3 +19,9 @@ def test_read_excel_file():
     file_parser.read_excel_file()
     assert len(file_parser.rows) > 0
     assert len(file_parser.headers) > 0
+
+def test_get_column_values():
+    file_parser = FileParser("tests/test_file.xlsx")
+    file_parser.read_excel_file()
+    column_values = file_parser.get_column_values("Column1")
+    assert len(column_values) == len(file_parser.rows)
