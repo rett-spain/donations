@@ -8,7 +8,6 @@ class Donation:
         self.stage_name = stage_name
         self.close_date = close_date
         self.donation_type = donation_type
-        #self.aesr_DonationCategory__c = aesr_DonationCategory__c
         self.donation_category = donation_category
         self.contact_id = contact_id
         self.donation_id = None

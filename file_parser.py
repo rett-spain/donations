@@ -1,6 +1,5 @@
 import pandas as pd
 from salesforce_api import SalesForceAPI
-from mysecrets import username, password, security_token
 
 class FileParser:
     def __init__(self, file_path):
