@@ -1,5 +1,5 @@
 from simple_salesforce import Salesforce
-from simple_salesforce.exceptions import SalesforceAuthenticationFailed, SalesforceMalformedRequest
+from simple_salesforce.exceptions import SalesforceMalformedRequest
 
 class SalesForceAPI:
     def __init__(self, username, password, security_token):

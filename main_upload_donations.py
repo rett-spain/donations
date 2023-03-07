@@ -1,7 +1,5 @@
-from mysecrets import username, password, security_token, email_address_1
+from mysecrets import username, password, security_token
 from salesforce_api import SalesForceAPI
-from donation import Donation
-from contact import Contact
 from file_parser import FileParser
 
 
