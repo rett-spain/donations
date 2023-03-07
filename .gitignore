@@ -130,4 +130,4 @@ dmypy.json
 
 # My secrets and example files
 mysecrets.py
-*.xlsx
+example*.xlsx
