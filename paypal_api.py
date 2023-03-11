@@ -76,3 +76,13 @@ class PayPalAPI:
             print(f'Transaction Amount: {transaction["transaction_info"]["transaction_amount"]["value"]} {transaction["transaction_info"]["transaction_amount"]["currency_code"]}')
             print(f'Transaction type: {transaction["transaction_info"]["transaction_event_code"]}')
             print('---')
+
+    #
+    # Print one transaction in a readable format
+    #
+    def print_transaction(self, transaction: dict) -> None:
+        print(f'Full Name: {transaction["payer_info"]["payer_name"]["alternate_full_name"]}')
+        print(f'Email Address: {transaction["payer_info"]["email_address"]}')
+        print(f'Transaction Date: {transaction["transaction_info"]["transaction_initiation_date"]}')
+        print(f'Transaction Amount: {transaction["transaction_info"]["transaction_amount"]["value"]} {transaction["transaction_info"]["transaction_amount"]["currency_code"]}')
+        print(f'Transaction type: {transaction["transaction_info"]["transaction_event_code"]}')
