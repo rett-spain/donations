@@ -1,6 +1,7 @@
 from simple_salesforce import Salesforce
 from simple_salesforce.exceptions import SalesforceMalformedRequest
 
+
 class SalesForceAPI:
     def __init__(self, username, password, security_token):
         self.username = username
@@ -39,10 +40,11 @@ class SalesForceAPI:
                                                       'Amount': donation["donation_amount"],
                                                       'StageName': donation["stage_name"],
                                                       'CloseDate': donation["close_date"].strftime('%Y-%m-%d'),
-                                                      'Type':donation["donation_type"],
+                                                      'Type': donation["donation_type"],
                                                       'aesr_DonationCategory__c': donation["donation_category"]})
             donation["donation_id"] = opportunity['id']
-            self.sf.OpportunityContactRole.create({'OpportunityId': donation["donation_id"], 'ContactId': donation["contact_id"]})
+            self.sf.OpportunityContactRole.create({'OpportunityId': donation["donation_id"],
+                                                   'ContactId': donation["contact_id"]})
         except SalesforceMalformedRequest as e:
             print(e)
 
