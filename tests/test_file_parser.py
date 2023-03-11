@@ -27,7 +27,9 @@ def test_get_column_values():
     column_values = file_parser.get_column_values("Column1")
     assert len(column_values) == len(file_parser.rows)
 
+
 class TestFileParser(unittest.TestCase):
+
     def setUp(self):
         self.file_path = 'tests/test_file.xlsx'
         self.file_parser = FileParser(self.file_path)

@@ -1,4 +1,4 @@
-from mysecrets import paypal_client_id, paypal_client_secret, paypal_base_url, paypal_token_url,  username, password, security_token
+from mysecrets import paypal_client_id, paypal_client_secret, paypal_base_url, paypal_token_url, username, password, security_token
 from paypal_api import PayPalAPI
 from salesforce_api import SalesForceAPI
 

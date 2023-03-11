@@ -36,7 +36,7 @@ class Donation:
 
     def get_donation_type(self):
         return self.donation_type
-    
+
     def get_donation_category(self):
         return self.donation_category
 
