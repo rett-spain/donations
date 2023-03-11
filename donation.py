@@ -2,7 +2,14 @@
 class Donation:
 
     # Constructor
-    def __init__(self, donation_name, donation_amount, stage_name, close_date, donation_type, donation_category, contact_id) -> None:
+    def __init__(self,
+                 donation_name,
+                 donation_amount,
+                 stage_name,
+                 close_date,
+                 donation_type,
+                 donation_category,
+                 contact_id) -> None:
         self.donation_name = donation_name
         self.donation_amount = donation_amount
         self.stage_name = stage_name

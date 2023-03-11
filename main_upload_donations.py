@@ -6,7 +6,7 @@ from file_parser import FileParser
 # Obtain the access token from Salesforce
 my_sf = SalesForceAPI(username, password, security_token)
 my_sf.authenticate()
-print (my_sf.sf)
+print(my_sf.sf)
 
 # Define the input and output file names
 filename = 'example_with_contact_ids.xlsx'
