@@ -41,7 +41,7 @@ class PayPalAPI:
     #
     # List the transactions for a given date range
     #
-    def list_transactions (self, start_date, end_date):
+    def list_transactions(self, start_date, end_date):
         # Set the URL for listing transactions
         url = self.base_url + '/v1/reporting/transactions'
 
@@ -58,7 +58,7 @@ class PayPalAPI:
         }
 
         # Make the get request to the API
-        response = requests.get (url, headers=headers, params=params)
+        response = requests.get(url, headers=headers, params=params)
         if response.status_code == 200:
             transactions = response.json()['transaction_details']
             return transactions

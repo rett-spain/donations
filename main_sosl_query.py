@@ -8,11 +8,11 @@ my_sf.authenticate()
 
 # Get the contact information by generic search
 search_terms = input("Enter the generic info:")
-results = my_sf.get_contactid_bygeneric (search_terms)
+results = my_sf.get_contactid_bygeneric(search_terms)
 
 # Calculate the relevance score
 for result in results['searchRecords']:
-    relevance_score = calculate_relevance_score (search_terms, result)
+    relevance_score = calculate_relevance_score(search_terms, result)
 
     # Add the relevance score to the result as a new key-value pair
     result['relevance_score'] = relevance_score
@@ -21,4 +21,4 @@ for result in results['searchRecords']:
 results['searchRecords'].sort(key=lambda x: x['relevance_score'], reverse=True)
 
 # Print just the top 5 results
-print_results (results, 5)
+print_results(results, 5)

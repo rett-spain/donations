@@ -6,7 +6,7 @@ from salesforce_api import SalesForceAPI
 # Obtain the access token from Salesforce
 my_sf = SalesForceAPI(username, password, security_token)
 my_sf.authenticate()
-print (my_sf.sf)
+print(my_sf.sf)
 
 # Create an instance of the PayPalAPI class and get an access token
 my_paypal = PayPalAPI(paypal_client_id,
@@ -28,8 +28,8 @@ for transaction in transactions_january:
     transaction['contact_id'] = contact_id
 
 # Print the transactions
-print ("Printing the transactions with contact ids ***********")
+print("Printing the transactions with contact ids ***********")
 for transaction in transactions_january:
     my_paypal.print_transaction(transaction)
-    print (f'Transaction type: {transaction["contact_id"]}')
-    print ('---')
+    print(f'Transaction type: {transaction["contact_id"]}')
+    print('---')
