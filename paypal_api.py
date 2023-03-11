@@ -1,6 +1,7 @@
 import requests
 from requests.auth import HTTPBasicAuth
 
+
 class PayPalAPI:
     #
     # Class constructor
@@ -27,7 +28,10 @@ class PayPalAPI:
             'grant_type': 'client_credentials'
         }
 
-        response = requests.post(self.token_url, headers=headers, data=data, auth=HTTPBasicAuth(self.client_id, self.client_secret))
+        response = requests.post(self.token_url,
+                                 headers=headers,
+                                 data=data,
+                                 auth=HTTPBasicAuth(self.client_id, self.client_secret))
         if response.status_code == 200:
             self.access_token = response.json()['access_token']
             return self.access_token
@@ -53,6 +57,7 @@ class PayPalAPI:
             'end_date': end_date
         }
 
+        # Make the get request to the API
         response = requests.get (url, headers=headers, params=params)
         if response.status_code == 200:
             transactions = response.json()['transaction_details']
@@ -61,7 +66,7 @@ class PayPalAPI:
             raise Exception('Failed to retrieve transactions')
 
     #
-    # Print the transactions
+    # Print the transactions in a readable format
     #
     def print_transactions(self, transactions: list) -> None:
         for transaction in transactions:
