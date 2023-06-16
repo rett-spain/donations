@@ -26,4 +26,4 @@ security_token = '<your security token>'
 
 To obtain the Salesforce security token, please select similar option from the user settings:
 
-![Alt text](docs\images\salesforce_token.png)
+![Alt text](docs/images/salesforce_token.png)
